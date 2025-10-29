@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruleta Blackjack 🔫</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1> Ruleta Blackjack </h1>
+
+  <div class="buttons">
+    <button id="startBtn">Start</button>
+    <button id="addCardBtn" disabled>Añadir carta</button>
+    <button id="standBtn" disabled>Plantarte</button>
+    <button id="abandonBtn" disabled>Abandonar</button>
+  </div>
+
+  <section class="mesa">
+    <div class="jugador">
+      <h2>Jugador (<span id="playerPoints">0</span>)</h2>
+      <div id="playerCards" class="cartas"></div>
+    </div>
+
+    <div class="dealer">
+      <h2>Dealer (<span id="dealerPoints">0</span>)</h2>
+      <div id="dealerCards" class="cartas"></div>
+    </div>
+  </section>
+
+  <div id="result"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
