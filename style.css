@@ -1,0 +1,153 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background: url('img/cartas/cards/fondo/imagen_1920x1080.webp') center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #f5f5dc;
+  text-align: center;
+  padding: 20px;
+  overflow-x: hidden;
+  min-height: 100vh;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+h1 {
+  color: #ffd700;
+  margin-bottom: 15px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+  font-size: 2.5em;
+  background: linear-gradient(45deg, #ffd700, #ffed4a, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.buttons {
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 12px 24px;
+  margin: 8px;
+  border-radius: 12px;
+  border: 2px solid #d4af37;
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #f5f5dc;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #d4af37, #ffd700);
+  color: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+}
+
+button:disabled {
+  background: linear-gradient(135deg, #4a4a4a, #666);
+  border-color: #666;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.mesa {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  padding: 20px;
+  border: 3px solid #d4af37;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.cartas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(20, 20, 20, 0.4);
+  border-radius: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.cartas img {
+  width: 90px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.2);
+  transform: rotate(var(--angle, 0deg)) scale(1);
+  animation: repartir 0.6s ease-out forwards;
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  transition: all 0.3s ease;
+}
+
+.cartas img:hover {
+  transform: rotate(var(--angle, 0deg)) scale(1.1);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+@keyframes repartir {
+  from { transform: scale(0.3) rotate(20deg); opacity: 0; }
+  to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+#result {
+  font-size: 1.8em;
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  border: 2px solid #d4af37;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.green { 
+  color: #00ff88; 
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+.red { 
+  color: #ff4757; 
+  text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+}
+
+.jugador h2, .dealer h2 {
+  color: #d4af37;
+  font-size: 1.4em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin-bottom: 10px;
+  padding: 8px 15px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+}
+
+.buttons {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+.flash {
+  animation: flash 0.6s alternate 3;
+}
+@keyframes flash {
+  0% { background-color: rgba(0,255,136,0.2); }
+  100% { background-color: rgba(255,71,87,0.2); }
+}
