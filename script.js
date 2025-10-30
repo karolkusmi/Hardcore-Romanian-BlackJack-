@@ -115,12 +115,16 @@ function endGame(status) {
 
   if (status === "win") {
     resultEl.innerHTML = `<span class="green">🎉 ¡Ganaste! Continúa el juego...</span>`;
-  } else if (status === "lose") {
+  }else if (status === "lose") {
     const color = randomColor();
     resultEl.innerHTML = `<span class="${color}">💀 Perdiste... ${
-      color === "red" ? "¡Balazo!" : "Te salvaste por poco..."
+      color === "red" ? "¡Balazo!" : "Te salvaste por poco... Sigues jugando"
     }</span>`;
-  } else if (status === "abandon") {
+
+  
+    mostrarModal();
+
+} else if (status === "abandon") {
     resultEl.innerHTML = `<span class="red">Te rendiste. Fin del juego.</span>`;
   } else {
     resultEl.innerHTML = `<span>Empate 🤝</span>`;
