@@ -1,6 +1,6 @@
 body {
   font-family: "Poppins", sans-serif;
-  background: url('img/cartas/cards/fondo/imagen_1920x1080.webp') center center;
+  background: url('Imagenes Casino/axes-5005087_1280.jpg') center center;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -16,7 +16,7 @@ h1 {
   color: #ffd700;
   margin-bottom: 15px;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
-  font-size: 2.5em;
+  font-size: 4em;
   background: linear-gradient(45deg, #ffd700, #ffed4a, #ffd700);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -151,65 +151,187 @@ button:disabled {
   0% { background-color: rgba(0,255,136,0.2); }
   100% { background-color: rgba(255,71,87,0.2); }
 }
+.about-us {
+  margin-top: 50px;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  border: 2px solid #d4af37;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
 
+.about-us h2 {
+  font-size: 2.5em;
+  background: linear-gradient(45deg, #ffd700, #ffed4a, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+  margin-bottom: 20px;
+}
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
+.about-text {
+  font-size: 1.2em;
+  color: #f5f5dc;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+  line-height: 1.6;
+}
+
+.about-images {
+  display: flex;
+  justify-content: center;
+}
+
+.about-images img {
+  width: 250px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  border: 2px solid #d4af37;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideIn 1s forwards;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.subtitulo {
+  font-size: 2em;
+  margin-top: 30px;
+  background: linear-gradient(45deg, #ffd700, #ffed4a, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.about-text {
+  font-size: 1.2em;
+  color: #f5f5dc;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+  line-height: 1.6;
+}
+
+.about-images {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.about-images img {
+  width: 250px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  border: 2px solid #d4af37;
+}
+
+/* Carta de póker con efecto de giro */
+.flip-card {
+  perspective: 1000px;
+  width: 250px;
+  height: 350px;
+  margin: 20px auto;
+}
+
+.flip-card-inner {
+  position: relative;
   width: 100%;
   height: 100%;
-  display: none; 
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0,0,0,0.5);
-  z-index: 1000;
-}
-.modal-container {
-  background: radial-gradient(circle,rgba(1, 107, 5, 1) 0%, rgba(133, 0, 0, 1) 61%, rgba(0, 0, 0, 1) 100%);
-  padding: 20px;
-  border-radius: 30px;
-  border: white 4px solid;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
 }
 
-.ruleta-container {
-  display : flex;
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  border: 4px solid #d4af37;
+  background-color: #fdf6e3;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap : 20px;
 }
 
-.ruleta{
-  width:200px;
-  height: 200px;
-  border-radius: 50%;
-  background : conic-gradient(red 0 50% , black 50% 100%);
-  transition: transform 1.5s linear;
+.flip-card-front img {
+  width: 85%;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.flecha {
-  font-size: 30px;
-  margin-bottom: -30px;
-}
-
-#resultadoRuleta {
-  font-size: 18px;
+.corner {
+  position: absolute;
+  font-size: 1.8em;
   font-weight: bold;
-  color: darkred;
-} 
-
-.modal-text{
-font-family: "Orbitron";
-color: #fff;
-font-weight: bold;
-text-shadow: 0 1px 0 #8a0f0f, 0 2px 0 #0f0d0d, 0 3px 0 #5a5959, 0 4px 0 #3d3d3d, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
-
+  color: #d40000;
+  font-family: 'Georgia', serif;
+  text-align: center;
+  line-height: 1.2;
 }
 
-.modal-p{
-  font-family: "Orbitron";
-  color: white;
+.top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.bottom-right {
+  bottom: 10px;
+  right: 10px;
+  transform: rotate(180deg);
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  padding: 20px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  color: #1a1a1a;
+}
+
+.flip-card-back h4 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #d40000;
+}
+
+.flip-card-back a {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #f5f5dc;
+  border: 2px solid #d4af37;
+  border-radius: 10px;
+  text-decoration: none;
   font-weight: bold;
-  text-shadow: #3a3939;
+  transition: all 0.3s ease;
+}
+
+.flip-card-back a:hover {
+  background: linear-gradient(135deg, #d4af37, #ffd700);
+  color: #1a1a1a;
+  transform: translateY(-2px);
+}
+.jugadores-en-accion {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
 }

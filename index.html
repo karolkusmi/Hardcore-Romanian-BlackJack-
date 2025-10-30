@@ -3,22 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ruleta Blackjack 🔫</title>
+  <title>Hardcore Romanian Blackjack 🔫</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single+Ink:wght@100..900&family=Orbitron:wght@400..900&family=Poiret+One&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <h1> Ruleta Blackjack </h1>
+  
+  <audio id="musicaFondo" loop>
+    <source src="audio/fondo1.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
 
+  <audio id="audioClick" preload="auto">
+    <source src="audio/click.cartas.mp3" type="audio/mpeg">
+  </audio>
+
+  <h1>Hardcore Romanian Blackjack 🔫</h1>
+ 
   <div class="buttons">
-    <button id="startBtn">Start</button>
-    <button id="addCardBtn" disabled>Añadir carta</button>
-    <button id="standBtn" disabled>Plantarte</button>
-    <button id="abandonBtn" disabled>Abandonar</button>
-  </div>
+  <button id="startBtn" onclick="playSound('audioClick')">Start</button>
+  <button id="addCardBtn" disabled onclick="playSound('audioClick')">Añadir carta</button>
+  <button id="standBtn" disabled onclick="playSound('audioClick')">Plantarte</button>
+  <button id="abandonBtn" disabled onclick="playSound('audioClick')">Abandonar</button>
+  <button onclick="playSound('audioClick'); document.getElementById('about-us').scrollIntoView({ behavior: 'smooth' });">
+    Sobre Nosotros
+  </button>
+</div>
 
+  <!-- Mesa de juego -->
   <section class="mesa">
     <div class="jugador">
       <h2>Jugador (<span id="playerPoints">0</span>)</h2>
@@ -31,29 +43,114 @@
     </div>
   </section>
 
+  <!-- Resultado del juego -->
   <div id="result"></div>
 
-<!--modal-->
+  <!-- Sección Sobre Nosotros -->
+  <section id="about-us" class="about-us">
+    <h2>Sobre Nosotros</h2>
+    <p class="about-text">
+      Somos apasionados del Blackjack y hemos creado este proyecto para compartir la emoción del juego con todos. ¡Bienvenidos a Hardcore Romanian Blackjack 🔫!
+    </p>
 
-  <div id="modal-lose" class="modal" style="display:none;">
-  <div class="modal-container">
-    <h2 class="modal-text">Gira la ruleta</h2>
-    <p class="modal-p">Tal vez tengas una segunda oportunidad</p>
-    <div class="ruleta-container">
-      <div id="ruleta" class="ruleta"></div>
-      <div class="flecha">🔺</div>
-      <button onclick="girarRuleta()">GIRAR</button>
-      <p id="resultadoRuleta"></p>
+    <h3 class="subtitulo">Jugadores en acción</h3>
+
+<div class="jugadores-en-accion">
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="corner top-left">
+          <span>Q</span>
+          <span>♥</span>
+        </div>
+        <img src="Imagenes Casino/Yova.png" alt="Foto de Yovanna">
+        <div class="corner bottom-right">
+          <span>Q</span>
+          <span>♥</span>
+        </div>
+      </div>
+      <div class="flip-card-back">
+        <h4>Yovanna</h4>
+        <p>Desarrolladora apasionada por el Blackjack</p>
+        <a href="https://www.linkedin.com/in/yovanna-alvarez-9a8545138" target="_blank">🔗 LinkedIn</a><br>
+        <a href="https://github.com/Yovanna07" target="_blank">💻 GitHub</a>
+      </div>
     </div>
-    
+  </div>
+
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="corner top-left">
+          <span>K</span>
+          <span>♠</span>
+        </div>
+        <img src="Imagenes Casino/Eva..png" alt="Foto de Eva">
+        <div class="corner bottom-right">
+          <span>K</span>
+          <span>♠</span>
+        </div>
+      </div>
+      <div class="flip-card-back">
+        <h4>Eva</h4>
+        <p>Experta en algoritmos de ruleta</p>
+        <a href="https://www.linkedin.com/in/eva-torres-guerrero-a50517386" target="_blank">🔗 LinkedIn</a><br>
+        <a href="https://github.com/LuisDev88" target="_blank">💻 GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="corner top-left">
+          <span>J</span>
+          <span>♦</span>
+        </div>
+        <img src="Imagenes Casino/Karol.png" alt="Foto de Karol">
+        <div class="corner bottom-right">
+          <span>J</span>
+          <span>♦</span>
+        </div>
+      </div>
+      <div class="flip-card-back">
+        <h4>Karolina</h4>
+        <p>Diseñadora de interfaces para juegos de azar</p>
+        <a href="https://www.linkedin.com/in/karol-kusmierz-b620b1367" target="_blank">🔗 LinkedIn</a><br>
+        <a href="https://github.com/karolkusmi" target="_blank">💻 GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="corner top-left">
+          <span>10</span>
+          <span>♣</span>
+        </div>
+        <img src="Imagenes Casino/Sorin.jpeg" alt="Sorin">
+        <div class="corner bottom-right">
+          <span>10</span>
+          <span>♣</span>
+        </div>
+      </div>
+      <div class="flip-card-back">
+        <h4>Sorin</h4>
+        <p>Ingeniero de datos para estadísticas de casino</p>
+        <a href="https://www.linkedin.com/in/sorin-petru-oprean-62a473159" target="_blank">🔗 LinkedIn</a><br>
+        <a href="https://github.com/Sorin95-Dev" target="_blank">💻 GitHub</a>
+      </div>
+    </div>
   </div>
 </div>
 
+    <div class="about-images">
+      <img src="Imagenes Casino/equipo2.jpg" alt="Jugadores en acción">
+    </div>
+  </section>
 
-
-
-    
-  <script src="modal-script.js"></script>
+  <!-- Script del juego -->
   <script src="script.js"></script>
 </body>
 </html>
