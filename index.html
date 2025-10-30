@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ruleta Blackjack 🔫</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single+Ink:wght@100..900&family=Orbitron:wght@400..900&family=Poiret+One&display=swap" rel="stylesheet">
 </head>
 <body>
   <h1> Ruleta Blackjack </h1>
@@ -30,6 +33,27 @@
 
   <div id="result"></div>
 
+<!--modal-->
+
+  <div id="modal-lose" class="modal" style="display:none;">
+  <div class="modal-container">
+    <h2 class="modal-text">Gira la ruleta</h2>
+    <p class="modal-p">Tal vez tengas una segunda oportunidad</p>
+    <div class="ruleta-container">
+      <div id="ruleta" class="ruleta"></div>
+      <div class="flecha">🔺</div>
+      <button onclick="girarRuleta()">GIRAR</button>
+      <p id="resultadoRuleta"></p>
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+    
+  <script src="modal-script.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
