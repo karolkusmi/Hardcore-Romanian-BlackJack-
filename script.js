@@ -13,7 +13,7 @@ let dealerPoints = 0;
 let gameActive = false;
 let deck = [];
 
-// Crear mazo de 52 cartas
+
 function createDeck() {
   deck = [];
   const suits = ['C', 'D', 'H', 'S']; 
@@ -47,13 +47,13 @@ function playSound(id) {
     return;
   }
 
-  // Reset to start so repeated clicks replay the sound
+  
   try { audio.currentTime = 0; } catch (e) {}
 
   const p = audio.play();
   if (p !== undefined) {
     p.catch(err => {
-      // Common reasons: autoplay policy or media decode failure
+      
       console.warn('Audio play prevented or failed for', id, err);
     });
   }
