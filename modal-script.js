@@ -123,9 +123,9 @@ function girarRuleta() {
   }, 2000);
 }
 
-// ============ FUNCIÓN DE LA PISTOLA ============
+// ===== FUNCIÓN DE LA PISTOLA =
 const mostrarPistolaYDisparar = () => {
-  // Ocultar el contenido de la ruleta
+  
   const modalContainer = document.querySelector('.modal-container');
   const ruletaContainer = document.querySelector('.ruleta-container');
   const modalText = document.querySelector('.modal-text');
@@ -136,15 +136,16 @@ const mostrarPistolaYDisparar = () => {
     return;
   }
   
-  // Ocultar elementos de la ruleta
+  
   if (ruletaContainer) ruletaContainer.style.display = 'none';
   if (modalText) modalText.style.display = 'none';
   if (modalP) modalP.style.display = 'none';
   
-  // Crear y mostrar el GIF de la pistola
+  
   const pistolaContainer = document.createElement('div');
   pistolaContainer.id = 'pistola-container';
   pistolaContainer.style.cssText = `
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -158,6 +159,7 @@ const mostrarPistolaYDisparar = () => {
   pistolaImg.style.cssText = `
       width: 500px;
       height: auto;
+      z-index: 5;
   `;
   
   const textoFinal = document.createElement('h2');
@@ -167,25 +169,52 @@ const mostrarPistolaYDisparar = () => {
       color: #ff0000;
       font-size: 3em;
       animation: parpadeo 0.5s infinite;
+      z-index: 6;
   `;
   
   pistolaContainer.appendChild(pistolaImg);
   pistolaContainer.appendChild(textoFinal);
   modalContainer.appendChild(pistolaContainer);
   
-  // Detener música de fondo y reproducir sonido de disparo
+
   const audioDisparo = document.getElementById('audioDisparo');
-
-  if (musicaFondo) {
-    musicaFondo.pause();
-  }
-
+  if (musicaFondo) musicaFondo.pause();
   if (audioDisparo) {
     audioDisparo.currentTime = 0;
     audioDisparo.play().catch(err => console.warn('Error al reproducir disparo:', err));
   }
+
   
-  // Efecto de pantalla roja (disparo)
+  const fuegoPantalla = document.createElement('img');
+  fuegoPantalla.src = 'Imagenes Casino/fuego.gif'; 
+  fuegoPantalla.alt = 'Fuego pantalla';
+  fuegoPantalla.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+  `;
+  
+  document.body.appendChild(fuegoPantalla);
+
+ 
+  setTimeout(() => {
+    fuegoPantalla.style.opacity = '1';
+  }, 0);
+
+ 
+  setTimeout(() => {
+    fuegoPantalla.style.opacity = '0';
+    setTimeout(() => fuegoPantalla.remove(), 300);
+  }, 750);
+
+ 
   setTimeout(() => {
     document.body.style.backgroundColor = 'red';
     document.body.style.transition = 'background-color 0.1s';
@@ -195,7 +224,7 @@ const mostrarPistolaYDisparar = () => {
     }, 200);
   }, 1500);
   
-  // Cerrar modal después de 4 segundos y restaurar elementos
+  
   setTimeout(() => {
     pistolaContainer.remove();
     if (ruletaContainer) ruletaContainer.style.display = 'flex';
@@ -203,27 +232,4 @@ const mostrarPistolaYDisparar = () => {
     if (modalP) modalP.style.display = 'block';
     cerrarModal();
   }, 4000);
-}
-
-// ============ FUNCIONES DE SONIDO ============
-function playButtonSound(soundFile) {
-  const audio = new Audio(soundFile);
-  audio.volume = 0.5;
-  audio.play().catch(err => console.log("Error al reproducir sonido:", err));
-}
-
-function playSound(audioId) {
-  const audio = document.getElementById(audioId);
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play().catch(e => console.log('Error al reproducir audio:', e));
-  }
-}
-
-// ============ EVENT LISTENERS PARA BOTONES ============
-const gameButtons = document.querySelectorAll('button:not(#musicBtn)');
-gameButtons.forEach(button => {
-  button.addEventListener('click', function() {
-    playSound('audioClick');
-  });
-});
+};
