@@ -398,3 +398,14 @@ text-shadow: 0 1px 0 #8a0f0f, 0 2px 0 #0f0d0d, 0 3px 0 #5a5959, 0 4px 0 #3d3d3d,
   margin-top: 30px;
 }
 
+
+/* cambios karol /*
+
+/* Animación de parpadeo para el texto GAME OVER */
+@keyframes parpadeo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* cambios karol /*
+
