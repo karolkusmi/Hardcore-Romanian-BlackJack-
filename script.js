@@ -93,17 +93,14 @@ function startGame() {
 }
 
 startBtn.addEventListener('click', () => {
-  // Play the click sound (if available)
   playSound('audioClick');
 
-  
   const bg = document.getElementById('musicaFondo');
   if (bg) {
     const p = bg.play();
     if (p !== undefined) p.catch(e => console.warn('Background music play prevented:', e));
   }
 
- 
   startGame();
 });
 
