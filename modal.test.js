@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-// Mock del DOM para las pruebas del modal
+// Mock del DOM para las pruebas del modall
 beforeEach(() => {
   document.body.innerHTML = `
     <div id="modal-lose" style="display: none;">
