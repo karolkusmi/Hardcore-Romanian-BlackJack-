@@ -13,17 +13,17 @@ let dealerPoints = 0;
 let gameActive = false;
 let deck = [];
 
-// Crear mazo de 52 cartas
+
 function createDeck() {
   deck = [];
-  const suits = ['C', 'D', 'H', 'S']; // Clubs, Diamonds, Hearts, Spades
+  const suits = ['C', 'D', 'H', 'S']; 
   const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   
   for (let suit of suits) {
     for (let rank of ranks) {
       let valor;
       if (rank === 'A') {
-        valor = 11; // As vale 11 (simplificado)
+        valor = 11; 
       } else if (['J', 'Q', 'K'].includes(rank)) {
         valor = 10;
       } else {
@@ -39,8 +39,7 @@ function createDeck() {
   deck = deck.sort(() => Math.random() - 0.5);
 }
 
-// Play a short sound from an <audio> element by id. Handles the Promise returned
-// by audio.play() so we can surface autoplay/permission rejections to the console.
+
 function playSound(id) {
   const audio = document.getElementById(id);
   if (!audio) {
@@ -48,13 +47,13 @@ function playSound(id) {
     return;
   }
 
-  // Reset to start so repeated clicks replay the sound
+  
   try { audio.currentTime = 0; } catch (e) {}
 
   const p = audio.play();
   if (p !== undefined) {
     p.catch(err => {
-      // Common reasons: autoplay policy or media decode failure
+      
       console.warn('Audio play prevented or failed for', id, err);
     });
   }
@@ -92,21 +91,16 @@ function startGame() {
   standBtn.disabled = false;
   abandonBtn.disabled = false;
 }
-// When the Start button is clicked we want to: play a click sound (user gesture),
-// try to start background music (browser may block autoplay without user gesture),
-// and then start the game.
+
 startBtn.addEventListener('click', () => {
-  // Play the click sound (if available)
   playSound('audioClick');
 
-  // Try to play the background music on the same user gesture
   const bg = document.getElementById('musicaFondo');
   if (bg) {
     const p = bg.play();
     if (p !== undefined) p.catch(e => console.warn('Background music play prevented:', e));
   }
 
-  // Start the game logic
   startGame();
 });
 
