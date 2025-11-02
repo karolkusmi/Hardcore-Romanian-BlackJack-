@@ -11,13 +11,45 @@ const musicaFondo = document.getElementById("musicaFondo");
 
 musicaFondo.volume = 0.3;
 
-function playButtonSound(soundFile) {
-  const audio = new Audio(soundFile);
-  audio.volume = 0.5;
-  audio.play().catch(err => console.log("Error al reproducir sonido:", err));
-}
-
+let playerPoints = 0;
+let dealerPoints = 0;
+let gameActive = false;
+let deck = [];
+let musicaPausada = false;
 let musicaIniciada = false;
+
+
+const musicControlBtn = document.getElementById("musicBtn");
+const musicIcon = document.getElementById("musicIcon");
+
+if (musicControlBtn && musicIcon) {
+  musicControlBtn.addEventListener('click', function(e) {
+    e.stopPropagation(); 
+    
+    console.log("🎵 Click en botón de música");
+    console.log("Estado actual - pausada:", musicaPausada);
+    console.log("Audio paused:", musicaFondo.paused);
+    
+    if (musicaPausada) {
+
+      musicaFondo.play()
+        .then(() => {
+          console.log("✅ Música reanudada");
+          musicIcon.textContent = "🔊";
+          musicControlBtn.classList.add("playing");
+          musicaPausada = false;
+        })
+        .catch(err => console.log("❌ Error al reproducir:", err));
+    } else {
+     
+      musicaFondo.pause();
+      console.log("⏸️ Música pausada");
+      musicIcon.textContent = "🔇";
+      musicControlBtn.classList.remove("playing");
+      musicaPausada = true;
+    }
+  });
+}
 
 document.addEventListener("click", function reproducirMusica() {
   if (!musicaIniciada) {
@@ -25,21 +57,24 @@ document.addEventListener("click", function reproducirMusica() {
       .then(() => {
         console.log("✅ Música reproduciendo correctamente");
         musicaIniciada = true;
+        if (musicControlBtn) {
+          musicControlBtn.classList.add("playing");
+        }
       })
       .catch(err => {
         console.error("❌ Error al reproducir música:", err);
-        alert("No se pudo reproducir el audio. Verifica que el archivo exista en: audio/fondo1.mp3");
       });
     document.removeEventListener("click", reproducirMusica);
   }
 }, { once: true });
 
-let playerPoints = 0;
-let dealerPoints = 0;
-let gameActive = false;
-let deck = [];
+// ============ FUNCIONES DEL JUEGO ============
+function playButtonSound(soundFile) {
+  const audio = new Audio(soundFile);
+  audio.volume = 0.5;
+  audio.play().catch(err => console.log("Error al reproducir sonido:", err));
+}
 
-// Crear mazo de 52 cartas
 function createDeck() {
   deck = [];
   const suits = ['C', 'D', 'H', 'S'];
@@ -73,11 +108,9 @@ const randomColor = () => (Math.random() < 0.5 ? "green" : "red");
 
 function startGame() {
   gameActive = true;
-
-  
   playButtonSound("musica.mp3/click mouse.mp3");
-
- 
+  
+  
   musicaFondo.pause();
   musicaFondo.currentTime = 0;
 
@@ -145,7 +178,7 @@ function endGame(status) {
   setTimeout(() => document.body.classList.remove("flash"), 1800);
 
  
-  if (musicaIniciada) {
+  if (musicaIniciada && !musicaPausada) {
     musicaFondo.play().catch(err => console.log("Error al reanudar música:", err));
   }
 
@@ -169,8 +202,8 @@ function playSound(audioId) {
   }
 }
 
-const allButtons = document.querySelectorAll('button');
-allButtons.forEach(button => {
+const gameButtons = document.querySelectorAll('button:not(#musicBtn)');
+gameButtons.forEach(button => {
   button.addEventListener('click', function() {
     playSound('audioClick');
   });
