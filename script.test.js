@@ -1,9 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
-// Importamos las funciones que necesitamos testear
-// Como el código original usa variables globales y DOM, necesitamos configurar un entorno mock
 
 // Mock del DOM y variables globales necesarias
 let playerPoints = 0;
