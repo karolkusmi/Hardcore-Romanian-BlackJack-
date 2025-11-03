@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 
 // Mock del DOM para las pruebas del modal
 beforeEach(() => {
