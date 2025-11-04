@@ -1,3 +1,9 @@
+import { 
+  mostrarModal, 
+  cerrarModal, 
+  determinarResultadoRuleta, 
+  generarGiroRuleta 
+} from './modal-script.js';
 
 // Mock del DOM para las pruebas del modal
 beforeEach(() => {
@@ -7,27 +13,6 @@ beforeEach(() => {
     </div>
   `;
 });
-
-// Funciones extraídas del modal-script.js para testing
-const mostrarModal = () => {
-  const modal = document.querySelector("#modal-lose"); 
-  modal.style.display = "flex";
-};
-
-const cerrarModal = () => {
-  const modal = document.querySelector('#modal-lose');
-  modal.style.display = 'none';
-};
-
-// Función para determinar el resultado de la ruleta basado en el ángulo
-function determinarResultadoRuleta(anguloFinal) {
-  return anguloFinal < 180 ? "rojo" : "negro";
-}
-
-// Función para generar un giro aleatorio de la ruleta
-function generarGiroRuleta() {
-  return Math.floor(Math.random() * 360) + 720;
-}
 
 describe('Modal and Roulette Tests', () => {
   
