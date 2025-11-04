@@ -1,59 +1,16 @@
-
-// Mock del DOM y variables globales necesarias
-let playerPoints = 0;
-let dealerPoints = 0;
-let gameActive = false;
-let deck = [];
-
-// Función createDeck extraída del script principal
-function createDeck() {
-  deck = [];
-  const suits = ['C', 'D', 'H', 'S']; // Clubs, Diamonds, Hearts, Spades
-  const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-  
-  for (let suit of suits) {
-    for (let rank of ranks) {
-      let valor;
-      if (rank === 'A') {
-        valor = 11; // As vale 11 (simplificado)
-      } else if (['J', 'Q', 'K'].includes(rank)) {
-        valor = 10;
-      } else {
-        valor = parseInt(rank);
-      }
-      deck.push({ 
-        valor, 
-        img: `img/cartas/cards/${rank}${suit}.png`,
-        name: `${rank}${suit}`
-      });
-    }
-  }
-  deck = deck.sort(() => Math.random() - 0.5);
-}
-
-// Función para calcular resultado del juego
-function calculateGameResult(playerPoints, dealerPoints) {
-  if (playerPoints > 21) return "lose";
-  if (dealerPoints > 21 || playerPoints > dealerPoints) return "win";
-  else if (playerPoints < dealerPoints) return "lose";
-  else return "draw";
-}
+import { calculateGameResult, createDeck } from './script.js';
 
 describe('BlackJack Game Tests', () => {
   
   // TEST 1: Verificar que el mazo se crea correctamente
   describe('createDeck function', () => {
-    beforeEach(() => {
-      deck = [];
-    });
-
     test('debe crear un mazo con 52 cartas', () => {
-      createDeck();
+      const deck = createDeck();
       expect(deck.length).toBe(52);
     });
 
     test('debe contener cartas con todas las propiedades necesarias', () => {
-      createDeck();
+      const deck = createDeck();
       
       // Verificar que cada carta tenga las propiedades correctas
       deck.forEach(card => {
@@ -67,7 +24,7 @@ describe('BlackJack Game Tests', () => {
     });
 
     test('debe asignar valores correctos a las cartas especiales', () => {
-      createDeck();
+      const deck = createDeck();
       
       // Verificar que los Ases valen 11
       const ases = deck.filter(card => card.name.startsWith('A'));

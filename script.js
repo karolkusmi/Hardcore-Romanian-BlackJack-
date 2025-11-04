@@ -1,12 +1,8 @@
-const startBtn = document.getElementById("startBtn");
-const addCardBtn = document.getElementById("addCardBtn");
-const standBtn = document.getElementById("standBtn");
-const abandonBtn = document.getElementById("abandonBtn");
-const playerPointsEl = document.getElementById("playerPoints");
-const dealerPointsEl = document.getElementById("dealerPoints");
-const resultEl = document.getElementById("result");
-const playerCardsEl = document.getElementById("playerCards");
-const dealerCardsEl = document.getElementById("dealerCards");
+import { mostrarModal } from './modal-script.js';
+
+let startBtn, addCardBtn, standBtn, abandonBtn;
+let playerPointsEl, dealerPointsEl, resultEl;
+let playerCardsEl, dealerCardsEl;
 
 let playerPoints = 0;
 let dealerPoints = 0;
@@ -14,7 +10,20 @@ let gameActive = false;
 let deck = [];
 
 
-function createDeck() {
+function initDOM() {
+  startBtn = document.getElementById("startBtn");
+  addCardBtn = document.getElementById("addCardBtn");
+  standBtn = document.getElementById("standBtn");
+  abandonBtn = document.getElementById("abandonBtn");
+  playerPointsEl = document.getElementById("playerPoints");
+  dealerPointsEl = document.getElementById("dealerPoints");
+  resultEl = document.getElementById("result");
+  playerCardsEl = document.getElementById("playerCards");
+  dealerCardsEl = document.getElementById("dealerCards");
+}
+
+
+export function createDeck() {
   deck = [];
   const suits = ['C', 'D', 'H', 'S']; 
   const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -37,6 +46,12 @@ function createDeck() {
     }
   }
   deck = deck.sort(() => Math.random() - 0.5);
+  return deck; 
+}
+
+
+export function getDeck() {
+  return deck;
 }
 
 
@@ -92,40 +107,64 @@ function startGame() {
   abandonBtn.disabled = false;
 }
 
-startBtn.addEventListener('click', () => {
-  playSound('audioClick');
 
-  const bg = document.getElementById('musicaFondo');
-  if (bg) {
-    const p = bg.play();
-    if (p !== undefined) p.catch(e => console.warn('Background music play prevented:', e));
+function setupEventListeners() {
+  if (startBtn) {
+    startBtn.addEventListener('click', () => {
+      playSound('audioClick');
+
+      const bg = document.getElementById('musicaFondo');
+      if (bg) {
+        const p = bg.play();
+        if (p !== undefined) p.catch(e => console.warn('Background music play prevented:', e));
+      }
+
+      startGame();
+    });
   }
 
-  startGame();
-});
+  if (addCardBtn) {
+    addCardBtn.onclick = () => {
+      if (!gameActive) return;
+      playerPoints += drawCard(playerCardsEl);
+      updateUI();
+      if (playerPoints > 21) endGame("lose");
+    };
+  }
 
-addCardBtn.onclick = () => {
-  if (!gameActive) return;
-  playerPoints += drawCard(playerCardsEl);
-  updateUI();
-  if (playerPoints > 21) endGame("lose");
-};
+  if (standBtn) {
+    standBtn.onclick = () => {
+      if (!gameActive) return;
+      while (dealerPoints < 17) dealerPoints += drawCard(dealerCardsEl);
+      updateUI();
+      checkResult();
+    };
+  }
 
-standBtn.onclick = () => {
-  if (!gameActive) return;
-  while (dealerPoints < 17) dealerPoints += drawCard(dealerCardsEl);
-  updateUI();
-  checkResult();
-};
+  if (abandonBtn) {
+    abandonBtn.onclick = () => {
+      if (!gameActive) return;
+      endGame("abandon");
+    };
+  }
+}
 
-abandonBtn.onclick = () => {
-  if (!gameActive) return;
-  endGame("abandon");
-};
+
+if (typeof document !== 'undefined') {
+  initDOM();
+  setupEventListeners();
+}
 
 function updateUI() {
   playerPointsEl.textContent = playerPoints;
   dealerPointsEl.textContent = dealerPoints;
+}
+
+export function calculateGameResult(playerPts, dealerPts) {
+  if (playerPts > 21) return "lose";
+  if (dealerPts > 21 || playerPts > dealerPts) return "win";
+  else if (playerPts < dealerPts) return "lose";
+  else return "draw";
 }
 
 function checkResult() {

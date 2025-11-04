@@ -1,70 +1,90 @@
-// ============ VARIABLES GLOBALES PARA EL MODAL ============
+// VARIABLES GLOBALES PARA EL MODAL 
 let anguloAcumulado = 0;
-const musicaFondo = document.getElementById("musicaFondo");
+let musicaFondo;
 let musicaPausada = false;
 let musicaIniciada = false;
+let musicControlBtn;
+let musicIcon;
 
-// ============ CONTROL DE MÚSICA ============
-const musicControlBtn = document.getElementById("musicBtn");
-const musicIcon = document.getElementById("musicIcon");
+// Inicializar elementos del DOM solo si están disponibles
+function initModalDOM() {
+  if (typeof document === 'undefined') return;
+  
+  musicaFondo = document.getElementById("musicaFondo");
+  musicControlBtn = document.getElementById("musicBtn");
+  musicIcon = document.getElementById("musicIcon");
 
-if (musicaFondo) {
-  musicaFondo.volume = 0.3;
+  if (musicaFondo) {
+    musicaFondo.volume = 0.3;
+  }
 }
 
-if (musicControlBtn && musicIcon) {
-  musicControlBtn.addEventListener('click', function(e) {
-    e.stopPropagation(); 
-    
-    console.log("🎵 Click en botón de música");
-    console.log("Estado actual - pausada:", musicaPausada);
-    console.log("Audio paused:", musicaFondo.paused);
-    
-    if (musicaPausada) {
+// CONTROL DE MÚSICA 
+function setupMusicControl() {
+  if (musicControlBtn && musicIcon) {
+    musicControlBtn.addEventListener('click', function(e) {
+      e.stopPropagation(); 
+      
+      console.log("🎵 Click en botón de música");
+      console.log("Estado actual - pausada:", musicaPausada);
+      console.log("Audio paused:", musicaFondo.paused);
+      
+      if (musicaPausada) {
+        musicaFondo.play()
+          .then(() => {
+            console.log("✅ Música reanudada");
+            musicIcon.textContent = "🔊";
+            musicControlBtn.classList.add("playing");
+            musicaPausada = false;
+          })
+          .catch(err => console.log("❌ Error al reproducir:", err));
+      } else {
+        musicaFondo.pause();
+        console.log("⏸️ Música pausada");
+        musicIcon.textContent = "🔇";
+        musicControlBtn.classList.remove("playing");
+        musicaPausada = true;
+      }
+    });
+  }
+}
+
+
+function setupAutoPlay() {
+  if (typeof document === 'undefined') return;
+  
+  document.addEventListener("click", function reproducirMusica() {
+    if (!musicaIniciada && musicaFondo) {
       musicaFondo.play()
         .then(() => {
-          console.log("✅ Música reanudada");
-          musicIcon.textContent = "🔊";
-          musicControlBtn.classList.add("playing");
-          musicaPausada = false;
+          console.log("✅ Música reproduciendo correctamente");
+          musicaIniciada = true;
+          if (musicControlBtn) {
+            musicControlBtn.classList.add("playing");
+          }
         })
-        .catch(err => console.log("❌ Error al reproducir:", err));
-    } else {
-      musicaFondo.pause();
-      console.log("⏸️ Música pausada");
-      musicIcon.textContent = "🔇";
-      musicControlBtn.classList.remove("playing");
-      musicaPausada = true;
+        .catch(err => {
+          console.error("❌ Error al reproducir música:", err);
+        });
+      document.removeEventListener("click", reproducirMusica);
     }
-  });
+  }, { once: true });
 }
 
-// Auto-iniciar música en la primera interacción
-document.addEventListener("click", function reproducirMusica() {
-  if (!musicaIniciada && musicaFondo) {
-    musicaFondo.play()
-      .then(() => {
-        console.log("✅ Música reproduciendo correctamente");
-        musicaIniciada = true;
-        if (musicControlBtn) {
-          musicControlBtn.classList.add("playing");
-        }
-      })
-      .catch(err => {
-        console.error("❌ Error al reproducir música:", err);
-      });
-    document.removeEventListener("click", reproducirMusica);
-  }
-}, { once: true });
 
-// ============ FUNCIONES DEL MODAL ============
-function mostrarModal() {
+if (typeof document !== 'undefined') {
+  initModalDOM();
+  setupMusicControl();
+  setupAutoPlay();
+}
+
+export function mostrarModal() {
   const modal = document.querySelector("#modal-lose");
   if (modal) {
     modal.style.display = "flex";
     console.log("🎯 Modal mostrado - Ruleta de la muerte activada");
     
-    // Iniciar la ruleta automáticamente después de un momento
+    
     setTimeout(() => {
       girarRuleta();
     }, 1000);
@@ -73,7 +93,7 @@ function mostrarModal() {
   }
 }
 
-function cerrarModal() {
+export function cerrarModal() {
   const modal = document.querySelector('#modal-lose');
   if (modal) {
     modal.style.display = 'none';
@@ -81,15 +101,25 @@ function cerrarModal() {
   }
 }
 
-function girarRuleta() {
+
+export function determinarResultadoRuleta(anguloFinal) {
+  return anguloFinal < 180 ? "rojo" : "negro";
+}
+
+
+export function generarGiroRuleta() {
+  return Math.floor(Math.random() * 360) + 720;
+}
+
+export function girarRuleta() {
   const ruleta = document.getElementById('ruleta');
   if (!ruleta) {
     console.error("❌ No se encontró el elemento ruleta");
     return;
   }
   
-  // Generar rotación aleatoria (al menos 3 vueltas completas + ángulo aleatorio)
-  const vueltas = 3 + Math.random() * 3; // Entre 3 y 6 vueltas
+  
+  const vueltas = 3 + Math.random() * 3; 
   const anguloExtra = Math.random() * 360;
   const anguloTotal = (vueltas * 360) + anguloExtra;
   
@@ -97,25 +127,25 @@ function girarRuleta() {
   
   console.log(`🎲 Girando ruleta: ${anguloTotal}° (Total: ${anguloAcumulado}°)`);
   
-  // Aplicar la rotación con animación
+  
   ruleta.style.transition = 'transform 2s ease-out';
   ruleta.style.transform = `rotate(${anguloAcumulado}deg)`;
   
-  // Calcular el resultado después de la animación
+  
   setTimeout(() => {
     const anguloFinal = anguloAcumulado % 360;
-    const color = anguloFinal < 180 ? "rojo" : "negro";
+    const color = determinarResultadoRuleta(anguloFinal);
     
     console.log(`🎯 Resultado: ${color} (${anguloFinal}°)`);
     
     if (color === "rojo") {
-      // Salvado - puede seguir jugando
+      
       setTimeout(() => {
         alert("❤️ ¡Uf, por los pelos! Te salvaste y sigues jugando... 🥳");
         cerrarModal();
       }, 500);
     } else {
-      // Perdió - mostrar pistola y disparo
+      
       setTimeout(() => {
         mostrarPistolaYDisparar();
       }, 500);
@@ -123,8 +153,8 @@ function girarRuleta() {
   }, 2000);
 }
 
-// ===== FUNCIÓN DE LA PISTOLA =
-const mostrarPistolaYDisparar = () => {
+
+export const mostrarPistolaYDisparar = () => {
   
   const modalContainer = document.querySelector('.modal-container');
   const ruletaContainer = document.querySelector('.ruleta-container');
